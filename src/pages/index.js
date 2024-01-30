@@ -1,0 +1,5 @@
+export { default as Home } from './Home'
+export { default as MovieDetail } from './MovieDetail'
+export { default as MoviesWant } from './MoviesWant'
+export { default as MoviesWatched } from './MoviesWatched'
+export { default as NotFound } from './NotFound'
