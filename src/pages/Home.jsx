@@ -1,18 +1,19 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Input } from '@nextui-org/react'
+import { formatReleaseDate } from '../utils/dateFormat'
+import { searchMovies } from '../api/apiCalls'
+import { URL_POSTER_PATH } from '../service/movies'
 
 const Home = () => {
-  const [seartList, setSearchList] = useState([])
+  const [searchList, setSearchList] = useState([])
   const [searchText, setSearchText] = useState('')
 
   const handleChange = async (event) => {
     const newSearch = event.target.value
     setSearchText(newSearch)
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=8768ef9f777f98f69145251c92ae63f0&query=${newSearch}&language=es-ES&page=1&include_adult=false`
-      )
+      const response = await fetch(searchMovies(newSearch))
       const json = await response.json()
 
       const movies = json.results
@@ -30,9 +31,9 @@ const Home = () => {
             variant="faded"
             color="warning"
             isClearable
-            size='sm'
+            size="sm"
             type="text"
-            radius='full'
+            radius="full"
             placeholder="Avengers, Matrix..."
             onChange={handleChange}
             value={searchText}
@@ -60,32 +61,42 @@ const Home = () => {
           />
         </div>
       </form>
-      {seartList.length !== 0 && (
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          {seartList.map((movie) => {
+      {searchList.length !== 0 && (
+        <ul className="grid grid-cols-1 gap-8 mt-14 sm:grid-cols-2 md:grid-cols-5 max-w-[1120px] mx-auto px-10">
+          {searchList.map((movie) => {
             return (
-              <div key={movie.id}>
-                <div className="flex flex-col items-center justify-center w-full h-full overflow-hidden shadow-lg rounded-lg dark:bg-[#141414]">
-                  <Link to="/movieDetail">
-                    <img
-                      className="object-cover w-full h-48"
-                      src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                      alt={movie.title}
-                    />
-                  </Link>
-                  <div className="flex flex-col items-center justify-center w-full h-full p-6">
-                    <h2 className="mt-4 mb-4 text-xl font-medium text-center text-gray-800 dark:text-white">
-                      {movie.title}
-                    </h2>
-                  </div>
+              <li key={movie.id}>
+                <Link to="/movieDetail" state={movie}>
+                  <img
+                    className="object-cover h-72 rounded-xl"
+                    src={
+                      movie.poster_path
+                        ? `${URL_POSTER_PATH}${movie.poster_path}`
+                        : 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM='
+                    }
+                    alt={movie.title}
+                  />
+                </Link>
+                <div>
+                  <p className="mt-2 font-bold whitespace-nowrap">
+                    {movie.title.length > 22
+                      ? movie.title.slice(0, 22) + '...'
+                      : movie.title}
+                  </p>
+                  <p className="text-gray-400">
+                    {formatReleaseDate(movie.release_date)}
+                  </p>
                 </div>
-              </div>
+              </li>
             )
           })}
-        </div>
+        </ul>
       )}
     </div>
   )
 }
+// </div>
+// )
+// }
 
 export default Home
