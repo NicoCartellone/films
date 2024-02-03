@@ -71,6 +71,8 @@ const Home = () => {
           />
       </form>
       {error && <p className="mt-10 text-center text-red-600">{error}</p>}
+      <div className='mx-auto'>
+
       {movies?.length > 0
         ? (
         <ul className="grid grid-cols-1 gap-8 mt-14 sm:grid-cols-2 md:grid-cols-5 max-w-[1120px] mx-auto px-10">
@@ -79,7 +81,7 @@ const Home = () => {
               <li key={movie.id}>
                 <Link to="/movieDetail" state={movie}>
                   <img
-                    className="object-cover h-72 rounded-xl"
+                    className="object-cover rounded-xl"
                     src={
                       movie.poster
                         ? `${URL_POSTER_PATH}${movie.poster}`
@@ -108,6 +110,7 @@ const Home = () => {
           No se encontraron peliculas para esta busqueda
         </p>
           )}
+      </div>
     </div>
   )
 }
