@@ -22,10 +22,10 @@ const MovieDetail = () => {
   }
 
   return (
-    <div className="mx-auto my-auto">
-      <div className="flex gap-24">
+    <div className="mx-auto my-auto text-center lg:text-left">
+      <div className="lg:flex lg:gap-24">
         <img
-          className="object-contain rounded-xl"
+          className="object-contain p-5 rounded-3xl"
           src={
             movieData.poster
               ? `https://image.tmdb.org/t/p/w500/${movieData.poster}`
@@ -35,7 +35,7 @@ const MovieDetail = () => {
           width={400}
           height={300}
         />
-        <div className="flex flex-col gap-2">
+        <div className="lg:gap-2 lg:flex-col lg:flex">
           <p className="text-3xl font-bold">{movieData.title}</p>
           <p className="text-xl text-gray-400">
             {formatReleaseDate(movieData.year)}
@@ -43,7 +43,7 @@ const MovieDetail = () => {
           <p className="text-lg max-w-[500px] text-balance leading-relaxed mt-10">
             {movieData.overview}
           </p>
-          <div className="flex gap-2">
+          <div className="lg:flex lg:gap-2">
             <Button color="warning" className="mt-10 font-bold w-52" onClick={() => handleWantMovie(movieData)}>
               Quiero ver
             </Button>

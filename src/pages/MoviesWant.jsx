@@ -29,12 +29,17 @@ const MoviesWant = () => {
         : (
         <ul className="grid grid-cols-1 gap-8 mt-14 sm:grid-cols-2 md:grid-cols-5 max-w-[1120px] mx-auto px-10">
           {moviesWant.map((movie) => (
-            <li className="movie" key={movie.id}>
+            <li key={movie.id}>
               <img
                 src={`${URL_POSTER_PATH}${movie.poster}`}
                 alt={movie.Title}
+                className='rounded-xl'
               />
-              <h3>{movie.title}</h3>
+              <p className="mt-2 font-bold whitespace-nowrap">
+                    {movie.title.length > 22
+                      ? movie.title.slice(0, 22) + '...'
+                      : movie.title}
+                  </p>
               <p>{formatReleaseDate(movie.year)}</p>
               <Button color='warning' onClick={() => handleRemoveWantMovie(movie)}>
                 Remover
