@@ -8,14 +8,14 @@ const Footer = () => {
           </span>
         </a>
         <p className="mt-4 text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0">
-          © 2020 Tailblocks —
+          © 2024 —
           <a
-            href="https://twitter.com/knyttneve"
+            href="https://github.com/NicoCartellone"
             className="ml-1 text-gray-500"
             target="_blank"
             rel="noopener noreferrer"
           >
-            @knyttneve
+            @NicoCartellone
           </a>
         </p>
         <span className="inline-flex justify-center mt-4 sm:ml-auto sm:mt-0 sm:justify-start">
