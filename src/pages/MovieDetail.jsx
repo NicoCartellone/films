@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom'
 import { Button } from '@nextui-org/react'
 import { formatReleaseDate } from '../utils/dateFormat'
 import useMoviesStore from '../store/movies'
+import { toast } from 'sonner'
 
 const MovieDetail = () => {
   const movieData = useLocation().state
@@ -9,10 +10,25 @@ const MovieDetail = () => {
   const addWantmovie = useMoviesStore((state) => state.addWantmovie)
   const moviesWant = useMoviesStore((state) => state.moviesWant)
 
+  const addWatchedmovie = useMoviesStore((state) => state.addWatchedMovie)
+  const moviesWatched = useMoviesStore((state) => state.moviesWatched)
+
   const handleWantMovie = async (movie) => {
     const movieExist = moviesWant.find((m) => m.id === movie.id)
     if (!movieExist) {
       await addWantmovie(movie)
+      // alert('Película guardada con exito')
+      toast.success('Película guardada con exito')
+    } else {
+      // alert('Película ya guardada')
+      toast.error('Película ya guardada')
+    }
+  }
+
+  const handleWatchedMovie = async (movie) => {
+    const movieExist = moviesWatched.find((m) => m.id === movie.id)
+    if (!movieExist) {
+      await addWatchedmovie(movie)
       alert('Película guardada con exito')
       // toast.success('Película guardada con exito')
     } else {
@@ -44,12 +60,12 @@ const MovieDetail = () => {
             {movieData.overview}
           </p>
           <div className="lg:flex lg:gap-2">
-            <Button color="warning" className="mt-10 font-bold w-52" onClick={() => handleWantMovie(movieData)}>
+            <Button color="warning" className="mt-10 w-52" onClick={() => handleWantMovie(movieData)}>
               Quiero ver
             </Button>
-            {/* <Button color="warning" className="mt-10 font-bold w-52">
+            <Button color="warning" className="mt-10 w-52" onClick={() => handleWatchedMovie(movieData)}>
               Vista
-            </Button> */}
+            </Button>
           </div>
         </div>
       </div>

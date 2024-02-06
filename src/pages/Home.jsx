@@ -6,6 +6,7 @@ import { URL_POSTER_PATH } from '../service/movies'
 import debounce from 'just-debounce-it'
 import { useMovies } from '../hooks/useMovies'
 import { useSearch } from '../hooks/useSearch'
+import { SearchIcon } from '../components/icons/SearchIcon'
 
 const Home = () => {
   const { search, updateSearch, error } = useSearch()
@@ -52,21 +53,7 @@ const Home = () => {
               setMovies([])
             }}
             startContent={
-              <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
+              <SearchIcon className="text-gray-500 dark:text-gray-400" />
             }
           />
       </form>
@@ -81,7 +68,7 @@ const Home = () => {
               <li key={movie.id}>
                 <Link to="/movieDetail" state={movie}>
                   <img
-                    className="object-cover rounded-xl"
+                    className="object-cover transition-all rounded-xl hover:scale-105"
                     src={
                       movie.poster
                         ? `${URL_POSTER_PATH}${movie.poster}`
