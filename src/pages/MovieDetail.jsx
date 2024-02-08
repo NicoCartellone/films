@@ -17,10 +17,8 @@ const MovieDetail = () => {
     const movieExist = moviesWant.find((m) => m.id === movie.id)
     if (!movieExist) {
       await addWantmovie(movie)
-      // alert('Película guardada con exito')
       toast.success('Película guardada con exito')
     } else {
-      // alert('Película ya guardada')
       toast.error('Película ya guardada')
     }
   }
@@ -38,7 +36,7 @@ const MovieDetail = () => {
   }
 
   return (
-    <div className="mx-auto my-auto text-center lg:text-left">
+    <div className="p-5 mx-auto my-auto text-center lg:text-left">
       <div className="lg:flex lg:gap-24">
         <img
           className="object-contain p-5 rounded-3xl"

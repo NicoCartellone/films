@@ -6,13 +6,21 @@ import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure
 } from '@nextui-org/react'
 import MoreIcon from '../components/icons/MoreIcon'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
 const MoviesWatched = () => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
   const moviesWatched = useMoviesStore((state) => state.moviesWatched)
   const removeWatchedMovie = useMoviesStore((state) => state.removeWatchedMovie)
   const moveMovieToWant = useMoviesStore((state) => state.moveWatchedToWant)
@@ -20,11 +28,9 @@ const MoviesWatched = () => {
   const handleremoveWatchedMovie = async (movie) => {
     try {
       await removeWatchedMovie(movie)
-      // alert('Película removida con exito')
       toast.success('Película removida con exito')
     } catch (error) {
       console.log(error)
-      // alert('Error al remover la película')
       toast.error('Error al remover la película')
     }
   }
@@ -51,7 +57,7 @@ const MoviesWatched = () => {
                     className="object-cover transition-all rounded-xl hover:scale-105"
                   />
                    </Link>
-                  <Dropdown placement="bottom-end" backdrop="blur">
+                  <Dropdown placement="bottom-end" backdrop="blur" className='text-white dark'>
                     <DropdownTrigger>
                       <Button
                         isIconOnly
@@ -63,11 +69,42 @@ const MoviesWatched = () => {
                       </Button>
                     </DropdownTrigger>
                     <DropdownMenu color='warning'>
-                      <DropdownItem key="remove" onClick={() => handleremoveWatchedMovie(movie)}>Quitar</DropdownItem>
+                      <DropdownItem key="remove" onClick={onOpen}>Quitar</DropdownItem>
                       <DropdownItem key="movetowatched" onClick={() => haddleMoveMovieToWant(movie)}>Mover a quiero ver</DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
                 </div>
+                <Modal
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                isDismissable={false}
+                className="text-white dark"
+              >
+                <ModalContent>
+                  {(onClose) => (
+                    <>
+                      <ModalHeader className="flex flex-col gap-1">
+                        Modal Title
+                      </ModalHeader>
+                      <ModalBody>
+                        <p>¿Quieres quitar la película de la lista?</p>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button
+                          color="danger"
+                          variant="light"
+                          onPress={() => handleremoveWatchedMovie(movie)}
+                        >
+                          Quitar
+                        </Button>
+                        <Button color="warning" onPress={onClose}>
+                          Cancelar
+                        </Button>
+                      </ModalFooter>
+                    </>
+                  )}
+                </ModalContent>
+              </Modal>
                 <p className="mt-2 font-bold whitespace-nowrap">
                   {movie.title.length > 22
                     ? movie.title.slice(0, 22) + '...'
