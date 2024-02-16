@@ -14,8 +14,9 @@ const MovieDetail = () => {
   const moviesWatched = useMoviesStore((state) => state.moviesWatched)
 
   const handleWantMovie = async (movie) => {
-    const movieExist = moviesWant.find((m) => m.id === movie.id)
-    if (!movieExist) {
+    const movieWantExist = moviesWant.find((m) => m.id === movie.id)
+    const movieWatchedExist = moviesWatched.find((m) => m.id === movie.id)
+    if (!movieWantExist && !movieWatchedExist) {
       await addWantmovie(movie)
       toast.success('Película guardada con exito')
     } else {
@@ -24,8 +25,9 @@ const MovieDetail = () => {
   }
 
   const handleWatchedMovie = async (movie) => {
-    const movieExist = moviesWatched.find((m) => m.id === movie.id)
-    if (!movieExist) {
+    const movieWantExist = moviesWant.find((m) => m.id === movie.id)
+    const movieWatchedExist = moviesWatched.find((m) => m.id === movie.id)
+    if (!movieWantExist && !movieWatchedExist) {
       await addWatchedmovie(movie)
       toast.success('Película guardada con exito')
     } else {
