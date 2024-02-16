@@ -27,11 +27,9 @@ const MovieDetail = () => {
     const movieExist = moviesWatched.find((m) => m.id === movie.id)
     if (!movieExist) {
       await addWatchedmovie(movie)
-      alert('Película guardada con exito')
-      // toast.success('Película guardada con exito')
+      toast.success('Película guardada con exito')
     } else {
-      alert('Película ya guardada')
-      // toast.error('Película ya guardada')
+      toast.error('Película ya guardada')
     }
   }
 
